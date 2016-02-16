@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd">
+    <enterprise-beans> <!--beginning of the EJB descriptor-->
+        <session>   <!--define EJB type: entity or session-->
+            <ejb-name>CalculatorBean</ejb-name>   <!--logical name for the bean-->
+            <!--<home>customer.CustomerHome</home>-->    <!--home interface name-->
+            <business-remote>getman.ejb.test.CalculatorBeanRemote</business-remote>   <!--remote interface name-->
+            <ejb-class>getman.ejb.test.CalculatorBean</ejb-class>   <!--bean class name-->
+            <!--<reentrant>False</reentrant>-->   <!--Reentrant boolean: True or False-->
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>   <!--transaction information for bean Bean/Container-->
+            <!--<security-role-ref>   &lt;!&ndash;security role for bean&ndash;&gt;
+                <role-name>CustRole</role-name>
+                <role-link>SCOTT</role-link>
+            </security-role-ref>-->
+        </session>
+    </enterprise-beans>
+</ejb-jar>
