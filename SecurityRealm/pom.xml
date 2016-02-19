@@ -5,14 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>EJB-test</groupId>
-    <artifactId>EJBClients</artifactId>
+    <artifactId>LoginModule</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <dependencies>
-        <dependency>
-            <groupId>EJB-test</groupId>
-            <artifactId>StateLessBean</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 
+    
 </project>
