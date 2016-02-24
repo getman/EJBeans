@@ -10,10 +10,13 @@
 
     <modules>
         <module>StateLessBean</module>
+        <module>StateLessBean3.0</module>
         <module>StateLessBean-ear</module>
         <module>EJBClients</module>
         <module>EntityBean</module>
         <module>MessageDrivenBean</module>
         <module>StateFullBean</module>
+        <module>SecurityRealm</module>
+        <module>Servlet</module>
     </modules>
 </project>

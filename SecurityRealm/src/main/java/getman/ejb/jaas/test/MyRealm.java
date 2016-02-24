@@ -17,21 +17,35 @@ public class MyRealm extends AppservRealm {
 
     @Override
     public void init(Properties properties) {
-        String propJaasContext = properties.getProperty(PARAM_JAAS_CONTEXT);
+        /*String propJaasContext = properties.getProperty(PARAM_JAAS_CONTEXT);
         if (propJaasContext != null) {
             setProperty(PARAM_JAAS_CONTEXT, propJaasContext);
+        }*/
+        System.out.println("CustomSimRealm->init");
+
+        Enumeration<?> names = properties.propertyNames();
+        String name = null;
+
+        while(names.hasMoreElements()){
+            name = (String)names.nextElement();
+            System.out.println("name->" + name + " value->" + properties.getProperty(name));
         }
     }
 
     @Override
     public String getAuthType() {
-        return "Getman Realm";
+        return "jaas-auth";
     }
 
     @Override
     public Enumeration getGroupNames(String s) throws InvalidOperationException, NoSuchUserException {
-        Vector vector = new Vector();
-        vector.add(GROUP_ALL);
-        return vector.elements();
+        Vector<String> v = new Vector<String>();
+        v.add("ADMIN");
+        return v.elements();
+    }
+
+    @Override
+    public synchronized String getJAASContext() {
+        return "myRealm";
     }
 }
