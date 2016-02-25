@@ -5,11 +5,11 @@
     <display-name>Calculator as a SessionBean Example</display-name>
     <enterprise-beans> <!--beginning of the EJB descriptor-->
         <session>   <!--define EJB type: entity or session-->
-            <ejb-name>CalculatorName</ejb-name>   <!--logical name for the bean-->
-            <home>getman.ejb.test.CalculatorHome</home>    <!--home interface name-->
-            <remote>getman.ejb.test.CalculatorRemote</remote>   <!--remote interface name-->
-            <ejb-class>getman.ejb.test.CalculatorBean</ejb-class>   <!--bean class name-->
-            <session-type>Stateless</session-type>
+            <ejb-name>CalculatorWithMemoryName</ejb-name>   <!--logical name for the bean-->
+            <home>getman.ejb.test.CalculatorWithMemoryHome</home>    <!--home interface name-->
+            <remote>getman.ejb.test.CalculatorWithMemoryRemote</remote>   <!--remote interface name-->
+            <ejb-class>getman.ejb.test.CalculatorWithMemoryBean</ejb-class>   <!--bean class name-->
+            <session-type>Stateful</session-type>
             <transaction-type>Container</transaction-type>   <!--transaction information for bean Bean/Container-->
         </session>
     </enterprise-beans>

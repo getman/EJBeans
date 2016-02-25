@@ -3,7 +3,8 @@ package getman.ejb.test;
 import javax.ejb.EJBObject;
 import java.rmi.RemoteException;
 
-/**Created by Parfenov Artem on 15.02.2016.*/
+/** EJB Component remote interface
+ * Created by Parfenov Artem on 15.02.2016.*/
 public interface CalculatorRemote extends EJBObject {
     /**Performs addition of two numbers*/
     public double add(double a, double b)throws RemoteException;

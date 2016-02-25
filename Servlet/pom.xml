@@ -31,25 +31,15 @@
             <artifactId>stateLessBean</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>EJB-test</groupId>
+            <artifactId>stateFulBean</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
         <finalName>Calculator-servlet</finalName>
-        <!--<plugins>
-            <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-war-plugin</artifactId>
-            <version>2.3</version>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <configuration>
-                        &lt;!&ndash;<webXml>../WEB-INF/web.xml</webXml>&ndash;&gt;
-                    </configuration>
-                </execution>
-            </executions>
-            </plugin>
-        </plugins>-->
     </build>
 
 </project>

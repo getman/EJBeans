@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE glassfish-ejb-jar PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 EJB 3.1//EN" "http://glassfish.org/dtds/glassfish-ejb-jar_3_1-1.dtd">
+<glassfish-ejb-jar>
+    <enterprise-beans>
+        <ejb>
+            <ejb-name>CalculatorName</ejb-name>
+            <jndi-name>CalcRemote</jndi-name>
+            <!--<ejb-ref>
+                <ejb-ref-name>ejb/BarBean</ejb-ref-name>
+                <jndi-name>java:global/app-name/module-name/FooBean!com.test.xxx.FooRemote</jndi-name>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/BuzBean</ejb-ref-name>
+                <jndi-name>corbaname:iiop:otherserver:3700#BuzBean</jndi-name>
+            </ejb-ref>
+            <resource-ref>
+                <res-ref-name>jdbc/employee</res-ref-name>
+                <jndi-name>jdbc/__default</jndi-name>
+            </resource-ref>-->
+        </ejb>
+    </enterprise-beans>
+</glassfish-ejb-jar>

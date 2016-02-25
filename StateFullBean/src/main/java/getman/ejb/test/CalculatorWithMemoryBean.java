@@ -6,17 +6,19 @@ import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
 import java.rmi.RemoteException;
 
-/** EJB component with business method
- * Created by Parfenov Artem on 15.02.2016.
+/**
+ * Created by Parfenov Artem on 25.02.2016.
  */
-public class CalculatorBean implements SessionBean {
+public class CalculatorWithMemoryBean implements SessionBean{
+    private double memory = 0;
 
-    public double add(double a, double b) throws RemoteException, CreateException {
+    /**summarize the two double values*/
+    public double add(double a, double b) throws RemoteException {
         return (double) a + b;
     }
-
-    public double subtract(double a, double b) throws RemoteException, CreateException {
-        return (double) a - b;
+    /**adds the specified double to the memory and returns the result*/
+    public double addToMemory(double a) throws RemoteException {
+        return memory += a;
     }
 
     // used for creating a reference to RemoteInterface
@@ -25,18 +27,18 @@ public class CalculatorBean implements SessionBean {
     }
 
     public void setSessionContext(SessionContext sessionContext) throws EJBException, RemoteException {
-        System.out.println("setSessionContext");
+
     }
 
     public void ejbRemove() throws EJBException, RemoteException {
-        System.out.println("ejbRemove");
+
     }
 
     public void ejbActivate() throws EJBException, RemoteException {
-        System.out.println("ejbActivate");
+
     }
 
     public void ejbPassivate() throws EJBException, RemoteException {
-        System.out.println("ejbPassivate");
+
     }
 }
