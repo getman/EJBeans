@@ -1,10 +1,12 @@
 package getman.ejb.servlet;
 
+import getman.ejb.logger.EJBLogger;
 import getman.ejb.test.CalculatorHome;
 import getman.ejb.test.CalculatorWithMemoryHome;
 import getman.ejb.test.CalculatorWithMemoryRemote;
 import getman.ejb3.test.CalculatorRemote3;
 import getman.ejb.test.CalculatorRemote;
+import org.apache.logging.log4j.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.RemoveException;
@@ -26,6 +28,7 @@ public class CalculatorServlet extends HttpServlet {
     private CalculatorRemote3 calc3;
     private CalculatorRemote calcBean;
     private CalculatorWithMemoryRemote calcWithMemBean;
+    private Logger logger = EJBLogger.getLogger(getClass());
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, String result) throws IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -51,13 +54,17 @@ public class CalculatorServlet extends HttpServlet {
             throws ServletException, IOException {
         if (request.getParameter("callCalc") != null) {
             processRequest(request, response, callCalculator(2, 5));
+            logger.debug("callCals");
         } else if (request.getParameter("callCalc3") != null) {
             processRequest(request, response, callCalculator3(3, 9));
+            logger.debug("callCalc3");
         } else if (request.getParameter("callCalcWithMem") != null) {
             processRequest(request, response, callCalculatorWithMemory(10));
+            logger.debug("callCalcWithMem");
         } else if (request.getParameter("killCalcWithMem") != null) {
             killCalcWithMem();
             processRequest(request, response, "");
+            logger.debug("killCalcWithMem");
         } else processRequest(request, response, "");
     }
 

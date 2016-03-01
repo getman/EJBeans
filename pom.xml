@@ -6,7 +6,26 @@
 
     <groupId>J2EE-test</groupId>
     <artifactId>EJBeans</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <target>1.7</target>
+                    <source>1.7</source>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
     <modules>
         <module>StateLessBean</module>
@@ -19,5 +38,7 @@
         <module>StateFullBean3.0</module>
         <module>SecurityRealm</module>
         <module>Servlet</module>
+        <module>util</module>
+        <module>ear-servlet</module>
     </modules>
 </project>

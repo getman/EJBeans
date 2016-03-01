@@ -1,15 +1,17 @@
 package getman.ejbclient.test;
 
 
-import com.sun.appserv.security.ProgrammaticLogin;
-import getman.ejb3.test.CalculatorRemote3;
-
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.security.auth.callback.*;
-import javax.security.auth.login.LoginContext;
-import java.io.IOException;
-import java.util.Properties;
+//import com.sun.appserv.security.ProgrammaticLogin;
+//import getman.ejb.test.CalculatorHome;
+//import getman.ejb.test.CalculatorRemote;
+//import getman.ejb3.test.CalculatorRemote3;
+//
+//import javax.naming.InitialContext;
+//import javax.naming.NamingException;
+//import javax.security.auth.callback.*;
+//import javax.security.auth.login.LoginContext;
+//import java.io.IOException;
+//import java.util.Properties;
 
 /**
  * Created by Parfenov Artem on 15.02.2016.
@@ -19,10 +21,10 @@ public class StatelessBeanClient {
     public static void main(String [] args) throws Exception {
 //        System.out.println(callRemoteAddition(Double.valueOf(10), Double.valueOf(6)));
 //        callRemote3();
-        callRemote3new();
+//        callRemote3new();
     }
 
-    private static void callRemote3new() {
+   /* private static void callRemote3new() {
         System.setProperty("java.security.auth.login.config", "C:\\glassfish3\\glassfish\\domains\\domain1\\config\\login.conf");
         Properties props = new Properties();
         props.setProperty("java.naming.factory.initial", "com.sun.enterprise.naming.SerialInitContextFactory");
@@ -50,7 +52,12 @@ public class StatelessBeanClient {
 //            CalculatorRemote3 b = (CalculatorRemote3)ic.lookup("java:global/getman.ejb3.test.CalculatorRemote3");
 //            CalculatorRemote3 b = (CalculatorRemote3)ic.lookup("getman.ejb3.test.CalculatorRemote3");
 //            CalculatorRemote3 b = (CalculatorRemote3)ic.lookup("CalculatorRemote3");
-            CalculatorRemote3 b = (CalculatorRemote3)ic.lookup("java:global/CalculatorBean3");
+//            CalculatorRemote3 b = (CalculatorRemote3)ic.lookup("CalculatorBean3");
+//            ic = new InitialContext();
+            java.lang.Object ejbHomeStub = ic.lookup("CalcRemote");
+            CalculatorHome calcHome = (CalculatorHome)javax.rmi.PortableRemoteObject.narrow(ejbHomeStub, CalculatorHome.class);
+            CalculatorRemote b = (CalculatorRemote) calcHome.create();
+
             System.out.println(b.add(1,1));
             pm.logout();
         } catch (NamingException e) {
@@ -81,7 +88,7 @@ public class StatelessBeanClient {
                 }
             }
         }
-    }
+    }*/
 
 }
 
