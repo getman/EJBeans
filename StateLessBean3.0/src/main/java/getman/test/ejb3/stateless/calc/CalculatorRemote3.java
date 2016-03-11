@@ -1,4 +1,4 @@
-package getman.ejb3.test;
+package getman.test.ejb3.stateless.calc;
 
 import javax.annotation.security.PermitAll;
 import javax.ejb.Remote;

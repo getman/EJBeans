@@ -8,9 +8,9 @@ import org.apache.logging.log4j.Logger;
  */
 public class EJBLogger {
 
-    public static Logger getLogger(Class<?> cl) {
-        System.setProperty("_APP_NAME_", cl.getName());
-        Logger logger = LogManager.getLogger(cl.getName());
+    public static synchronized Logger getLogger(Class<?> cl) {
+//        System.setProperty("_APP_NAME_", cl.getName());
+        Logger logger = LogManager.getLogger(cl);
         return logger;
     }
 }

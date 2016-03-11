@@ -10,21 +10,26 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>EJB-test</groupId>
-    <artifactId>ear-servlet</artifactId>
+    <artifactId>ear-stateful-bean-3</artifactId>
     <version>1.0</version>
     <packaging>ear</packaging>
 
     <dependencies>
         <dependency>
             <groupId>EJB-test</groupId>
-            <artifactId>Servlet</artifactId>
+            <artifactId>stateFullBean-3.0</artifactId>
             <version>1.0</version>
-            <type>war</type>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>EJB-test</groupId>
+            <artifactId>util</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 
     <build>
-        <finalName>ear-servlet</finalName>
+        <finalName>ear-statefull-calc-3</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -32,7 +37,7 @@
                 <version>2.6</version>
                 <configuration>
                     <version>5</version>
-                    <displayName>earServlet</displayName>
+                    <displayName>earStateFullCalc3</displayName>
                     <generateApplicationXml>true</generateApplicationXml>
                     <fileNameMapping>no-version</fileNameMapping>
                 </configuration>

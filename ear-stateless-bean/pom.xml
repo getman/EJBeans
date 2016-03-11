@@ -2,24 +2,34 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>EJBeans</artifactId>
+        <groupId>J2EE-test</groupId>
+        <version>1.0</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>EJB-test</groupId>
-    <artifactId>StateLessBean-ear</artifactId>
+    <artifactId>ear-stateless-calc</artifactId>
     <packaging>ear</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <dependencies>
         <dependency>
             <groupId>EJB-test</groupId>
-            <artifactId>StateLessBean</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>stateLessBean</artifactId>
+            <version>1.0</version>
             <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>EJB-test</groupId>
+            <artifactId>util</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 
     <build>
-        <finalName>StateLessBean-ear</finalName>
+        <finalName>ear-stateless-calc</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -27,17 +37,9 @@
                 <version>2.6</version>
                 <configuration>
                     <version>5</version>
-                    <displayName>StateLessBean</displayName>
+                    <displayName>earStateLessCalc</displayName>
                     <generateApplicationXml>true</generateApplicationXml>
                     <fileNameMapping>no-version</fileNameMapping>
-                    <!--<archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                        </manifest>
-                        <manifestEntries>
-                            <Implementation-Version>${pom.version}</Implementation-Version>
-                        </manifestEntries>
-                    </archive>-->
                 </configuration>
             </plugin>
         </plugins>

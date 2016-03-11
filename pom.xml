@@ -30,7 +30,6 @@
     <modules>
         <module>StateLessBean</module>
         <module>StateLessBean3.0</module>
-        <module>StateLessBean-ear</module>
         <module>EJBClients</module>
         <module>EntityBean</module>
         <module>MessageDrivenBean</module>
@@ -40,5 +39,9 @@
         <module>Servlet</module>
         <module>util</module>
         <module>ear-servlet</module>
+        <module>ear-stateless-bean-3</module>
+        <module>ear-stateless-bean</module>
+        <module>ear-stateful-bean-2</module>
+        <module>ear-stateful-bean-3</module>
     </modules>
 </project>

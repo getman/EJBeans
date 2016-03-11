@@ -1,5 +1,9 @@
 package getman.ejb.test;
 
+import getman.ejb.logger.EJBLogger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.ejb.CreateException;
 import javax.ejb.EJBException;
 import javax.ejb.SessionBean;
@@ -11,7 +15,11 @@ import java.rmi.RemoteException;
  */
 public class CalculatorBean implements SessionBean {
 
+    private Logger logger = EJBLogger.getLogger(getClass());
+
     public double add(double a, double b) throws RemoteException, CreateException {
+        System.out.println("system stateless add:" + (a + b));
+        logger.trace("stateless add:" + (a + b));
         return (double) a + b;
     }
 
@@ -21,22 +29,22 @@ public class CalculatorBean implements SessionBean {
 
     // used for creating a reference to RemoteInterface
     public void ejbCreate () throws CreateException {
-        System.out.println("ejbCreate");
+        logger.trace("ejbCreate");
     }
 
     public void setSessionContext(SessionContext sessionContext) throws EJBException, RemoteException {
-        System.out.println("setSessionContext");
+        logger.trace("setSessionContext");
     }
 
     public void ejbRemove() throws EJBException, RemoteException {
-        System.out.println("ejbRemove");
+        logger.trace("ejbRemove");
     }
 
     public void ejbActivate() throws EJBException, RemoteException {
-        System.out.println("ejbActivate");
+        logger.trace("ejbActivate");
     }
 
     public void ejbPassivate() throws EJBException, RemoteException {
-        System.out.println("ejbPassivate");
+        logger.trace("ejbPassivate");
     }
 }

@@ -4,8 +4,9 @@ import getman.ejb.logger.EJBLogger;
 import getman.ejb.test.CalculatorHome;
 import getman.ejb.test.CalculatorWithMemoryHome;
 import getman.ejb.test.CalculatorWithMemoryRemote;
-import getman.ejb3.test.CalculatorRemote3;
+import getman.test.ejb3.stateless.calc.CalculatorRemote3;
 import getman.ejb.test.CalculatorRemote;
+import getman.test.ejb3.stateful.calc.CalculatorWithMemoryRemote3;
 import org.apache.logging.log4j.Logger;
 
 import javax.ejb.EJB;
@@ -26,6 +27,8 @@ import java.rmi.RemoteException;
 public class CalculatorServlet extends HttpServlet {
     @EJB
     private CalculatorRemote3 calc3;
+    @EJB
+    private CalculatorWithMemoryRemote3 calcStateful3;
     private CalculatorRemote calcBean;
     private CalculatorWithMemoryRemote calcWithMemBean;
     private Logger logger = EJBLogger.getLogger(getClass());
@@ -37,10 +40,12 @@ public class CalculatorServlet extends HttpServlet {
         out.println("<form method = \"post\" class=\"form-signin\" role=\"form\" action=\"calc-servlet\">");
         out.println("Call result: " + result);
         out.println("<p>");
-        out.println("<input type=\"submit\" name=\"callCalc\" class=\"btn\" value=\"Call calc\">");
-        out.println("<input type=\"submit\" name=\"callCalc3\" class=\"btn\" value=\"Call calc3\">");
-        out.println("<input type=\"submit\" name=\"callCalcWithMem\" class=\"btn\" value=\"Call calc with mem\">");
-        out.println("<input type=\"submit\" name=\"killCalcWithMem\" class=\"btn\" value=\"Kill calc with mem\">");
+        out.println("<input type=\"submit\" name=\"callStatelessCalc2\" class=\"btn\" value=\"Call stateless calc 2.0\">");
+        out.println("<input type=\"submit\" name=\"callStatelessCalc3\" class=\"btn\" value=\"Call stateless calc 3.1\">");
+        out.println("<input type=\"submit\" name=\"callStatefulCalc2\" class=\"btn\" value=\"Call stateful calc 2.0\">");
+        out.println("<input type=\"submit\" name=\"calcStatefulCalc3\" class=\"btn\" value=\"Call stateful calc 3.1\">");
+        out.println("<input type=\"submit\" name=\"killStatefulCalc2\" class=\"btn\" value=\"Kill stateful calc 2.0\">");
+        out.println("<input type=\"submit\" name=\"killStatefulCalc3\" class=\"btn\" value=\"Kill stateful calc 3.1\">");
         out.println("</form>");
         out.println("</div>");
     }
@@ -52,27 +57,46 @@ public class CalculatorServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("callCalc") != null) {
-            processRequest(request, response, callCalculator(2, 5));
-            logger.debug("callCals");
-        } else if (request.getParameter("callCalc3") != null) {
-            processRequest(request, response, callCalculator3(3, 9));
-            logger.debug("callCalc3");
-        } else if (request.getParameter("callCalcWithMem") != null) {
-            processRequest(request, response, callCalculatorWithMemory(10));
-            logger.debug("callCalcWithMem");
-        } else if (request.getParameter("killCalcWithMem") != null) {
-            killCalcWithMem();
+        if (request.getParameter("callStatelessCalc2") != null) {
+            processRequest(request, response, callStatelessCalc2(2, 5));
+            logger.debug("callStatelessCalc2");
+        } else if (request.getParameter("callStatelessCalc3") != null) {
+            processRequest(request, response, callStatelessCalc3(3, 9));
+            logger.debug("callStatelessCalc3");
+        } else if (request.getParameter("callStatefulCalc2") != null) {
+            processRequest(request, response, callStatefulCalc2(10));
+            logger.debug("callStatefulCalc2");
+        } else if (request.getParameter("calcStatefulCalc3") != null) {
+            processRequest(request, response, callStatefulCalc3(15));
+            logger.debug("calcStatefulCalc3");
+        }  else if (request.getParameter("killStatefulCalc2") != null) {
+            killStatefulCalc2();
             processRequest(request, response, "");
-            logger.debug("killCalcWithMem");
+            logger.debug("killStatefulCalc2");
+        }  else if (request.getParameter("killStatefulCalc3") != null) {
+            killStatefulCalc3();
+            processRequest(request, response, "");
+            logger.debug("killStatefulCalc3");
         } else processRequest(request, response, "");
     }
 
-    private String callCalculator3(double a, double b) {
+    private String callStatefulCalc3(double a) {
+        try {
+            if (calcStateful3 == null) {
+                reinjectStatefulCalc3();
+            }
+            return Double.valueOf(calcStateful3.addToMemory(a)).toString();
+        } catch (NamingException e) {
+            logger.error("Could not reinject stateful calc 3", e);
+        }
+        return null;
+    }
+
+    private String callStatelessCalc3(double a, double b) {
         return Double.valueOf(calc3.add(a, b)).toString();
     }
 
-    private String callCalculator(double a, double b) {
+    private String callStatelessCalc2(double a, double b) {
         try {
             if (calcBean == null) {
                 InitialContext ic = new InitialContext();
@@ -82,14 +106,14 @@ public class CalculatorServlet extends HttpServlet {
             }
             return Double.valueOf(calcBean.add(a, b)).toString();
         } catch (NamingException e) {
-            e.printStackTrace();
+            logger.error("Failed to execute call due to NamingException", e);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            logger.error("Failed to execute call due to RemoteException", e);
         }
         return null;
     }
 
-    private String callCalculatorWithMemory(double a) {
+    private String callStatefulCalc2(double a) {
         try {
             if (calcWithMemBean == null) {
                 InitialContext ic = new InitialContext();
@@ -107,7 +131,7 @@ public class CalculatorServlet extends HttpServlet {
         return null;
     }
 
-    private void killCalcWithMem() {
+    private void killStatefulCalc2() {
         if (calcWithMemBean != null) {
             try {
                 calcWithMemBean.remove();
@@ -118,5 +142,17 @@ public class CalculatorServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void killStatefulCalc3() {
+        if (calcStateful3 != null) {
+            calcStateful3.removeMe();
+            calcStateful3 = null;
+        }
+    }
+
+    private void reinjectStatefulCalc3() throws NamingException {
+        calcStateful3 = (CalculatorWithMemoryRemote3) new InitialContext().
+                lookup("getman.test.ejb3.stateful.calc.CalculatorWithMemoryRemote3");
     }
 }

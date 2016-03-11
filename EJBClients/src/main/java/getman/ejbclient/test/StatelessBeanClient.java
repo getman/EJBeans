@@ -4,7 +4,7 @@ package getman.ejbclient.test;
 //import com.sun.appserv.security.ProgrammaticLogin;
 //import getman.ejb.test.CalculatorHome;
 //import getman.ejb.test.CalculatorRemote;
-//import getman.ejb3.test.CalculatorRemote3;
+//import CalculatorRemote3;
 //
 //import javax.naming.InitialContext;
 //import javax.naming.NamingException;
@@ -49,8 +49,8 @@ public class StatelessBeanClient {
 //            auth.login();
 
 //            CalculatorRemote3 b = (CalculatorRemote3)ic.lookup("java:global/CalculatorRemote3");
-//            CalculatorRemote3 b = (CalculatorRemote3)ic.lookup("java:global/getman.ejb3.test.CalculatorRemote3");
-//            CalculatorRemote3 b = (CalculatorRemote3)ic.lookup("getman.ejb3.test.CalculatorRemote3");
+//            CalculatorRemote3 b = (CalculatorRemote3)ic.lookup("java:global/CalculatorRemote3");
+//            CalculatorRemote3 b = (CalculatorRemote3)ic.lookup("CalculatorRemote3");
 //            CalculatorRemote3 b = (CalculatorRemote3)ic.lookup("CalculatorRemote3");
 //            CalculatorRemote3 b = (CalculatorRemote3)ic.lookup("CalculatorBean3");
 //            ic = new InitialContext();
