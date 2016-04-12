@@ -26,10 +26,10 @@ import java.rmi.RemoteException;
  */
 public class CalculatorServlet extends HttpServlet {
     @EJB
-    private CalculatorRemote3 calc3;
+    private CalculatorRemote3 statelessCalc3bean;
     @EJB
     private CalculatorWithMemoryRemote3 calcStateful3;
-    private CalculatorRemote calcBean;
+    private CalculatorRemote statelessCalc2Bean;
     private CalculatorWithMemoryRemote calcWithMemBean;
     private Logger logger = EJBLogger.getLogger(getClass());
 
@@ -41,11 +41,16 @@ public class CalculatorServlet extends HttpServlet {
         out.println("Call result: " + result);
         out.println("<p>");
         out.println("<input type=\"submit\" name=\"callStatelessCalc2\" class=\"btn\" value=\"Call stateless calc 2.0\">");
+        out.println("<input type=\"submit\" name=\"killStatelessCalc2\" class=\"btn\" value=\"Remove\">");
+
         out.println("<input type=\"submit\" name=\"callStatelessCalc3\" class=\"btn\" value=\"Call stateless calc 3.1\">");
+        out.println("<input type=\"submit\" name=\"killStatelessCalc3\" class=\"btn\" value=\"Remove\">");
+
         out.println("<input type=\"submit\" name=\"callStatefulCalc2\" class=\"btn\" value=\"Call stateful calc 2.0\">");
+        out.println("<input type=\"submit\" name=\"killStatefulCalc2\" class=\"btn\" value=\"Remove\">");
+
         out.println("<input type=\"submit\" name=\"calcStatefulCalc3\" class=\"btn\" value=\"Call stateful calc 3.1\">");
-        out.println("<input type=\"submit\" name=\"killStatefulCalc2\" class=\"btn\" value=\"Kill stateful calc 2.0\">");
-        out.println("<input type=\"submit\" name=\"killStatefulCalc3\" class=\"btn\" value=\"Kill stateful calc 3.1\">");
+        out.println("<input type=\"submit\" name=\"killStatefulCalc3\" class=\"btn\" value=\"Remove\">");
         out.println("</form>");
         out.println("</div>");
     }
@@ -60,19 +65,27 @@ public class CalculatorServlet extends HttpServlet {
         if (request.getParameter("callStatelessCalc2") != null) {
             processRequest(request, response, callStatelessCalc2(2, 5));
             logger.debug("callStatelessCalc2");
+        } else if (request.getParameter("killStatelessCalc2") != null) {
+            killStateless2();
+            processRequest(request, response, "");
+            logger.debug("killStatelessCalc2");
         } else if (request.getParameter("callStatelessCalc3") != null) {
             processRequest(request, response, callStatelessCalc3(3, 9));
             logger.debug("callStatelessCalc3");
+        } else if (request.getParameter("killStatelessCalc3") != null) {
+            killStateless3();
+            processRequest(request, response, "");
+            logger.debug("killStatelessCalc3");
         } else if (request.getParameter("callStatefulCalc2") != null) {
             processRequest(request, response, callStatefulCalc2(10));
             logger.debug("callStatefulCalc2");
-        } else if (request.getParameter("calcStatefulCalc3") != null) {
-            processRequest(request, response, callStatefulCalc3(15));
-            logger.debug("calcStatefulCalc3");
-        }  else if (request.getParameter("killStatefulCalc2") != null) {
+        } else if (request.getParameter("killStatefulCalc2") != null) {
             killStatefulCalc2();
             processRequest(request, response, "");
             logger.debug("killStatefulCalc2");
+        } else if (request.getParameter("calcStatefulCalc3") != null) {
+            processRequest(request, response, callStatefulCalc3(15));
+            logger.debug("calcStatefulCalc3");
         }  else if (request.getParameter("killStatefulCalc3") != null) {
             killStatefulCalc3();
             processRequest(request, response, "");
@@ -93,18 +106,18 @@ public class CalculatorServlet extends HttpServlet {
     }
 
     private String callStatelessCalc3(double a, double b) {
-        return Double.valueOf(calc3.add(a, b)).toString();
+        return Double.valueOf(statelessCalc3bean.add(a, b)).toString();
     }
 
     private String callStatelessCalc2(double a, double b) {
         try {
-            if (calcBean == null) {
+            if (statelessCalc2Bean == null) {
                 InitialContext ic = new InitialContext();
                 java.lang.Object ejbHomeStub = ic.lookup("CalcRemote");
                 CalculatorHome calcHome = (CalculatorHome)javax.rmi.PortableRemoteObject.narrow(ejbHomeStub, CalculatorHome.class);
-                calcBean = (CalculatorRemote) calcHome.create();
+                statelessCalc2Bean = (CalculatorRemote) calcHome.create();
             }
-            return Double.valueOf(calcBean.add(a, b)).toString();
+            return Double.valueOf(statelessCalc2Bean.add(a, b)).toString();
         } catch (NamingException e) {
             logger.error("Failed to execute call due to NamingException", e);
         } catch (RemoteException e) {
@@ -148,6 +161,24 @@ public class CalculatorServlet extends HttpServlet {
         if (calcStateful3 != null) {
             calcStateful3.removeMe();
             calcStateful3 = null;
+        }
+    }
+
+    private void killStateless3() {
+        if (statelessCalc3bean != null) {
+            statelessCalc3bean.remove();
+        }
+    }
+
+    private void killStateless2() {
+        try {
+            if (statelessCalc2Bean != null) {
+                statelessCalc2Bean.remove();
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (RemoveException e) {
+            e.printStackTrace();
         }
     }
 

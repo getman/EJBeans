@@ -9,13 +9,14 @@ import javax.ejb.*;
 
 /**Created by Parfenov Artem on 10.03.2016.
  */
-@Stateful
-public class CalculatorWithMemoryBean3 implements CalculatorWithMemoryRemote3{
-    private Logger logger = EJBLogger.getLogger(getClass());
+@Stateful(name = "CalculatorStatefulEJBName")
+public class CalculatorWithMemoryBean3 implements CalculatorWithMemoryRemote3 {
+    private transient Logger logger;
 
     private double memory = 0;
 
     public CalculatorWithMemoryBean3() {
+        logger = EJBLogger.getLogger(getClass());
         logger.trace("statefull 3.0 constructed");
     }
 
