@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd">
+
+    <enterprise-beans> <!--beginning of the EJB descriptor-->
+        <entity>   <!--define EJB type: entity or session-->
+            <description>no description</description>
+            <display-name>HumanBean</display-name>
+            <ejb-name>HumanBeanName</ejb-name>   <!--logical name for the bean-->
+            <home>getman.ejb2.entity.cmp.human.HumanHome</home>    <!--home interface name-->
+            <remote>getman.ejb2.entity.cmp.human.HumanRemote</remote>   <!--remote interface name-->
+            <ejb-class>getman.ejb2.entity.cmp.human.HumanBean</ejb-class>   <!--bean class name-->
+            <persistence-type>Container</persistence-type>
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>HumanBeanScheme</abstract-schema-name>
+            <!--<prim-key-class>EmployeePK</prim-key-class>-->
+            <primary-field>human_id</primary-field> <!--Первичный ключ-->
+            <prim-key-class>java.lang.String</prim-key-class> <!--тип первичного ключа-->
+            <!--<reentrant>False</reentrant>-->
+            <cmp-field>
+                <field-name>human_id</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>first_name</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>last_name</field-name>
+            </cmp-field>
+            <query>
+                <description></description>
+                <query-method>
+                    <method-name>findAll</method-name>
+                    <method-params/>
+                </query-method>
+                <ejb-ql>Select OBJECT(e) From EmployeeBean e</ejb-ql>
+            </query>
+            <query>
+                <description></description>
+                <query-method>
+                    <method-name>findByName</method-name>
+                    <method-params>
+                        <method-param>java.lang.String</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>Select OBJECT(e) From EmployeeBean e where e.empName = ?1</ejb-ql>
+            </query>
+        </entity>
+    </enterprise-beans>
+</ejb-jar>

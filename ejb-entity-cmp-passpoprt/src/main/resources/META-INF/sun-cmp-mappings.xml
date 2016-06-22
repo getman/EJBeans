@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sun-cmp-mappings>
+    <sun-cmp-mapping>
+        <schema/>
+        <entity-mapping>
+            <ejb-name>PassportBeanName</ejb-name>
+            <table-name>passport</table-name>
+            <cmp-field-mapping>
+                <field-name>passid</field-name>
+                <column-name>passid</column-name>
+            </cmp-field-mapping>
+            <cmp-field-mapping>
+                <field-name>name</field-name>
+                <column-name>name</column-name>
+            </cmp-field-mapping>
+            <cmp-field-mapping>
+                <field-name>surname</field-name>
+                <column-name>surname</column-name>
+            </cmp-field-mapping>
+        </entity-mapping>
+    </sun-cmp-mapping>
+</sun-cmp-mappings>

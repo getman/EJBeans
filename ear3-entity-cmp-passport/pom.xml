@@ -10,26 +10,27 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>EJB-test</groupId>
-    <artifactId>ear-stateless-calc</artifactId>
+    <artifactId>ear3-entity-cmp-passport</artifactId>
     <version>1.0</version>
     <packaging>ear</packaging>
 
     <dependencies>
-        <dependency>
+        <!--<dependency>
             <groupId>EJB-test</groupId>
-            <artifactId>stateLessBean</artifactId>
+            <artifactId>ejb3-entity-bean</artifactId>
             <version>1.0</version>
             <type>ejb</type>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>EJB-test</groupId>
-            <artifactId>util</artifactId>
+            <artifactId>servlet-3</artifactId>
             <version>1.0</version>
+            <type>war</type>
         </dependency>
     </dependencies>
 
     <build>
-        <finalName>ear-stateless-calc</finalName>
+        <finalName>ear3-entity-jpa-passport</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -37,10 +38,18 @@
                 <version>2.6</version>
                 <configuration>
                     <version>5</version>
-                    <displayName>earStateLessCalc</displayName>
+                    <displayName>ear3JpaPassport</displayName>
                     <generateApplicationXml>true</generateApplicationXml>
                     <fileNameMapping>no-version</fileNameMapping>
+                    <!--<modules>
+                        <ejbModule>
+                            <groupId>EJB-test</groupId>
+                            <artifactId>ejb3-entity-bean</artifactId>
+                            <bundleDir>/lib</bundleDir>
+                        </ejbModule>
+                    </modules>-->
                 </configuration>
+
             </plugin>
         </plugins>
     </build>

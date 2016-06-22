@@ -31,8 +31,9 @@
         <module>StateLessBean</module>
         <module>StateLessBean3.0</module>
         <module>EJBClients</module>
-        <module>EntityBean</module>
         <module>MessageDrivenBean</module>
+        <module>ejb-entity-cmp-passpoprt</module>
+        <module>ejb3-entity-cmp-passport</module>
         <module>StateFullBean</module>
         <module>StateFullBean3.0</module>
         <module>SecurityRealm</module>
@@ -43,5 +44,9 @@
         <module>ear-stateless-bean</module>
         <module>ear-stateful-bean-2</module>
         <module>ear-stateful-bean-3</module>
+
+        <module>ejb3-entity-bean</module>
+        <module>servlet-3</module>
+        <module>ear3-entity-cmp-passport</module>
     </modules>
 </project>

@@ -10,38 +10,29 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>EJB-test</groupId>
-    <artifactId>ear-stateless-calc</artifactId>
+    <artifactId>ejb3-entity-bean</artifactId>
     <version>1.0</version>
-    <packaging>ear</packaging>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
-            <groupId>EJB-test</groupId>
-            <artifactId>stateLessBean</artifactId>
-            <version>1.0</version>
-            <type>ejb</type>
-        </dependency>
-        <dependency>
-            <groupId>EJB-test</groupId>
-            <artifactId>util</artifactId>
-            <version>1.0</version>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
         </dependency>
     </dependencies>
-
     <build>
-        <finalName>ear-stateless-calc</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-ear-plugin</artifactId>
-                <version>2.6</version>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
                 <configuration>
-                    <version>5</version>
-                    <displayName>earStateLessCalc</displayName>
-                    <generateApplicationXml>true</generateApplicationXml>
-                    <fileNameMapping>no-version</fileNameMapping>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+    
 </project>

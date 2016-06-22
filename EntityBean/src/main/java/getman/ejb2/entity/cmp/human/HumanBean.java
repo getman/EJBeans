@@ -1,4 +1,4 @@
-package getman.ejb2.entity;
+package getman.ejb2.entity.cmp.human;
 
 import javax.ejb.EJBException;
 import javax.ejb.EntityBean;
@@ -9,48 +9,59 @@ import java.rmi.RemoteException;
 /**
  * Created by Parfenov Artem on 12.04.2016.
  */
-public class HumanBean implements EntityBean {
-    private String lastName;
+public abstract class HumanBean implements EntityBean {
+    /*private String lastName;
     private String firstName;
-    private String primaryKey;
+    private String primaryKey;*/
 
     private EntityContext entityContext;
+
+    //------------------------------------------------------
+    public abstract void setFirst(String first);
+    public abstract String getFirst();
+    public abstract void setLast(String last);
+    public abstract String getLast();
+    public abstract void setPK(String pk);
+    public abstract String getPK();
 
 
 
     //--------------------------------------------------------------
     /**we have to set the create method according to J2EE spec*/
     public String ejbCreate(String firstName, String lastName) {
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.primaryKey = this.getPk();
+        this.setLast(lastName);
+        this.setFirst(firstName);
+        this.setPK(this.getPrimareKey());
         //inserting data into the database
         //...
 
-        return this.primaryKey;
+        return this.getPK();
     }
 
+    public void ejbPostCreate(String firstName, String lastName) {
+
+    }
 
     public String getLastName() {
-        return lastName;
+        return this.getLast();
     }
 
     /**updates the database state*/
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.setLast(lastName);
     }
 
     public String getFirstName() {
-        return firstName;
+        return this.getFirst();
     }
 
     /**updates the database state*/
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.setFirst(firstName);
     }
 
 
-
+    //----------------etnity bean methods---------------
     public void setEntityContext(EntityContext entityContext) throws EJBException, RemoteException {
         this.entityContext = entityContext;
     }
@@ -73,7 +84,8 @@ public class HumanBean implements EntityBean {
     public void ejbStore() throws EJBException, RemoteException {
     }
 
-    private String getPk() {
+
+    private String getPrimareKey() {
         return "some primary key";
     }
 }
