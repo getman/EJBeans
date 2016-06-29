@@ -24,7 +24,26 @@ passport objects
 <% } else { %>
       no passport
 <% } %>
+<form method="POST" action="persons">
+    <p>
+        <label for="item">Add passport:</label>
+        <input id="passport" type="text" name="passport"/>
+        <input type="hidden" name="action" value="add"/>
+        <input type="submit" value="add"/>
+    </p>
+
+</form>
+<form method="POST" action="persons">
+    <p>
+        <label for="item">Remove by passid:</label>
+        <input id="passportIdToRemove" type="text" name="passportIdToRemove"/>
+        <input type="hidden" name="action" value="remove"/>
+        <input type="submit" value="remove"/>
+    </p>
+</form>
 <p></p>
+
+
 
 human objects
 <% Object humanList = request.getAttribute("humanEntities");%>
@@ -32,7 +51,7 @@ human objects
     <table>
         <% for (HumanEntity3 human : (List<HumanEntity3>) humanList) { %>
             <tr>
-                <td>id: <%= human.getHumanid() %></td>
+                <td>id: <%= human.getId() %></td>
                 <td>name: <%= human.getName() %></td>
                 <td>surname: <%= human.getSurname() %></td>
             </tr>
@@ -41,7 +60,26 @@ human objects
 <% } else { %>
       no humans
 <% } %>
+<form method="POST" action="persons">
+    <p>
+        <label for="item">Add human:</label>
+        <input id="human" type="text" name="human"/>
+        <input type="hidden" name="action" value="add"/>
+        <input type="submit" value="add"/>
+    </p>
+
+</form>
+<form method="POST" action="persons">
+    <p>
+        <label for="item">Remove by humanid:</label>
+        <input id="humanIdToRemove" type="text" name="humanIdToRemove"/>
+        <input type="hidden" name="action" value="remove"/>
+        <input type="submit" value="remove"/>
+    </p>
+</form>
 <p></p>
+
+
 
 driverid objects
 <% Object driverList = request.getAttribute("driveridEntities");%>
@@ -59,8 +97,8 @@ driverid objects
 <% } %>
 <form method="POST" action="persons">
     <p>
-        <label for="item">New passport:</label>
-        <input id="passport" type="text" name="passport"/>
+        <label for="item">Add driverId:</label>
+        <input id="driverId" type="text" name="driverId"/>
         <input type="hidden" name="action" value="add"/>
         <input type="submit" value="add"/>
     </p>
@@ -68,11 +106,12 @@ driverid objects
 </form>
 <form method="POST" action="persons">
     <p>
-        <label for="item">New passport:</label>
-        <input id="idToRemove" type="text" name="idToRemove"/>
+        <label for="item">Remove by driverId:</label>
+        <input id="driverIdToRemove" type="text" name="driverIdToRemove"/>
         <input type="hidden" name="action" value="remove"/>
         <input type="submit" value="remove"/>
     </p>
 </form>
+
 </body>
 </html>

@@ -46,8 +46,8 @@ public class PassportServlet3 extends HttpServlet {
     }
 
     private void selectEntities(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<PassportBean3> samples = entityManager.createNativeQuery("SELECT p.passid, p.number, p.country FROM passport p", "PassResult").getResultList();
-        List<HumanEntity3> humanEntities = entityManager.createNativeQuery("SELECT h.humanid, h.name, h.surname FROM human h", "SelectHuman").getResultList();
+        List<PassportBean3> samples = entityManager.createNativeQuery("SELECT p.passid, p.number, p.country, p.human_id FROM passport p", "PassResult").getResultList();
+        List<HumanEntity3> humanEntities = entityManager.createNativeQuery("SELECT h.id, h.name, h.surname FROM human h", "SelectHuman").getResultList();
         List<DriverId> driverIdEntities = entityManager.createNativeQuery("SELECT d.driverid, d.number FROM driverid d", "SelectDriverId").getResultList();
         if (!samples.isEmpty()) {
             request.setAttribute("passportBeans", samples);
@@ -98,28 +98,72 @@ public class PassportServlet3 extends HttpServlet {
     }
 
     private void handleAddition(HttpServletRequest request) throws SystemException, NotSupportedException, RollbackException, HeuristicRollbackException, HeuristicMixedException {
+        String humanParameter = request.getParameter("human");
         String passport = request.getParameter("passport");
-        if (passport != null && !passport.isEmpty()) {
+        String driverId = request.getParameter("driverId");
+        if (humanParameter != null && !humanParameter.isEmpty()) {
+            transaction.begin();
+            HumanEntity3 newhuman = new HumanEntity3();
+            newhuman.setName("---");
+            newhuman.setSurname(humanParameter);
+            entityManager.persist(newhuman);
+            transaction.commit();
+        } else if (passport != null && !passport.isEmpty()) {
             transaction.begin();
             PassportBean3 newPassport = new PassportBean3();
-            newPassport.setCountry("расеюшка моя любимая");
-            newPassport.setNumber(passport);
-            entityManager.persist(newPassport);
+            newPassport.setCountry(passport);
+            newPassport.setNumber("pass num");
+//            int humanPassportId = Integer.valueOf(passport);
+//            newPassport.setPassid(humanPassportId);
+//            HumanEntity3 human = entityManager.find(HumanEntity3.class, humanPassportId);
+            HumanEntity3 human = new HumanEntity3();
+            human.setName("Valera");
+            human.setSurname("Ilin");
+            newPassport.setHuman(human);
+//            entityManager.persist(newPassport);
+            entityManager.merge(newPassport);
             transaction.commit();
         }
     }
 
     private void handleRemoval(HttpServletRequest request) throws IOException, SystemException, NotSupportedException, RollbackException, HeuristicRollbackException, HeuristicMixedException {
-        Integer idToRemove = Integer.valueOf(request.getParameter("idToRemove"));
-        if (idToRemove != null) {
+        String passportIdToRemoveStr = request.getParameter("passportIdToRemove");
+        Integer passportIdToRemove = ((passportIdToRemoveStr == null) || (passportIdToRemoveStr.isEmpty())) ? null : Integer.valueOf(passportIdToRemoveStr.trim());
+        String humanIdToRemoveStr = request.getParameter("humanIdToRemove");
+        Integer humanIdToRemove = ((humanIdToRemoveStr == null) || (humanIdToRemoveStr.isEmpty())) ? null : Integer.valueOf(humanIdToRemoveStr.trim());
+        String driverIdToRemoveStr = request.getParameter("driverIdToRemove");
+        Integer driverIdToRemove = ((driverIdToRemoveStr == null) || (driverIdToRemoveStr.isEmpty())) ? null : Integer.valueOf(driverIdToRemoveStr.trim());
+        int id;
+        if (passportIdToRemove != null) {
             transaction.begin();
-            int id = idToRemove;
+            id = passportIdToRemove;
             logger.info("Id to search passport:" + id);
             PassportBean3 passport = entityManager.find(PassportBean3.class, id);
             if (passport != null) {
                 logger.info("Found passport: " + passport.getPassid() + "/" + passport.getNumber() +
                     "/" + passport.getCountry());
                 entityManager.remove(passport);
+                transaction.commit();
+            }
+        } else if (humanIdToRemove != null) {
+            transaction.begin();
+            id = humanIdToRemove;
+            logger.info("Id to search human:" + id);
+            HumanEntity3 human = entityManager.find(HumanEntity3.class, id);
+            if (human != null) {
+                logger.info("Found human: " + human.getId() + "/" + human.getName() +
+                        "/" + human.getSurname());
+                entityManager.remove(human);
+                transaction.commit();
+            }
+        } else if (driverIdToRemove != null) {
+            transaction.begin();
+            id = driverIdToRemove;
+            logger.info("Id to search driver:" + id);
+            DriverId driverId = entityManager.find(DriverId.class, id);
+            if (driverId != null) {
+                logger.info("Found driver: " + driverId.getDriverid() + "/" + driverId.getNumber());
+                entityManager.remove(driverId);
                 transaction.commit();
             }
         }

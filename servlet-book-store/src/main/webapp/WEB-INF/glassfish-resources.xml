@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN"
+        "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
+<resources>
+    <jdbc-connection-pool
+            max-pool-size="10"
+            datasource-classname="org.postgresql.ds.PGConnectionPoolDataSource"
+            res-type="javax.sql.ConnectionPoolDataSource"
+            name="pgsqlPool"
+            pool-resize-quantity="10">
+        <property name="user" value="postgres"/>
+        <property name="PortNumber" value="5432"/>
+        <property name="password" value="postgres"/>
+        <property name="ServerName" value="localhost"/>
+        <property name="databaseName" value="passpot"/>
+        <property name="connectionAttributes" value=";create=true"/>
+    </jdbc-connection-pool>
+    <jdbc-resource
+            pool-name="pgsqlPool"
+            jndi-name="jdbc/postgresql/postgres"/>
+</resources>

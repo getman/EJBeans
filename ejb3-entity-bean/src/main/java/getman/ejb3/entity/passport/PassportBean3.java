@@ -26,17 +26,29 @@ public class PassportBean3 implements Serializable {
     private String number;
     @Column(name="country")
     private String country;
+
+    @OneToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name="human_id")
+    private HumanEntity3 human;
+
     //------------Methods-----------
     public PassportBean3() {}
 
     /**конструктор с параметрами в порядке следования их в SqlResultSetMapping*/
-    /*public PassportBean3(int id, String number, String country) {
+//    public PassportBean3(int id, String number, String country, int human_id) {
+    public PassportBean3(int id, String number, String country) {
         this.passid = id;
         this.number = number;
         this.country = country;
-    }*/
+    }
 
+    public HumanEntity3 getHuman() {
+        return human;
+    }
 
+    public void setHuman(HumanEntity3 human) {
+        this.human = human;
+    }
 
     public int getPassid() {
         return passid;

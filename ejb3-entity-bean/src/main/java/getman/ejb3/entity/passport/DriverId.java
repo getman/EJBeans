@@ -16,6 +16,7 @@ import javax.persistence.*;
                     @ColumnResult(name="number", type = String.class)})})
 public class DriverId {
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="driverid")
     private Integer driverid;
     @Column(name="number")

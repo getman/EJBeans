@@ -48,5 +48,9 @@
         <module>ejb3-entity-bean</module>
         <module>servlet-3</module>
         <module>ear3-entity-cmp-passport</module>
+
+        <module>servlet-book-store</module>
+        <module>ear3-jpa-book-store</module>
+
     </modules>
 </project>
