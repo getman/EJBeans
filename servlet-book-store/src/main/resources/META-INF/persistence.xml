@@ -10,6 +10,7 @@
         <class>getman.ejb3.jpa.relations.ISBN</class>
         <class>getman.ejb3.jpa.relations.AuthorEntity</class>
         <class>getman.ejb3.jpa.relations.BookReviewEntity</class>
+        <class>getman.ejb3.jpa.relations.BookSpoiler</class>
 
         <properties>
             <property name="hibernate.transaction.jta.platform"

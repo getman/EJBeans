@@ -17,6 +17,16 @@ public class BookReviewEntity {
     @Column(name="text")
     private String reviewText;
 
+    //many-to-one bidirectional relation with the book - one book may have many reviews
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private BookEntity book;
+
+    //Mane-to-one bidirectional relation with the author - one author can write many reviews
+    @ManyToOne
+    @JoinColumn(name = "review_author_id")
+    private AuthorEntity author;
+
     public BookReviewEntity() {}
 
     public int getReviewId() {
@@ -33,5 +43,21 @@ public class BookReviewEntity {
 
     public void setReviewText(String reviewText) {
         this.reviewText = reviewText;
+    }
+
+    public BookEntity getBook() {
+        return book;
+    }
+
+    public void setBook(BookEntity book) {
+        this.book = book;
+    }
+
+    public AuthorEntity getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(AuthorEntity author) {
+        this.author = author;
     }
 }

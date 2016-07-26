@@ -15,10 +15,13 @@ public class ISBN {
     private int isbnId;
     @Column(name="number")
     private String isbnNumber;
-//    @OneToOne(mappedBy = "isbn", cascade = {CascadeType.REMOVE})
-    @OneToOne(cascade = {CascadeType.REMOVE})
+
+
+//    @OneToOne(cascade = {CascadeType.REMOVE})
 //    @JoinColumn(name = "isbn_id")
-    @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "book_id")
+//    @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "book_id")
+    //bidirectional relation from BookEntity
+    @OneToOne(mappedBy = "isbn", cascade = {CascadeType.REMOVE})
     private BookEntity book;
 
     public ISBN() {}

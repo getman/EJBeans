@@ -1,7 +1,11 @@
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Set" %>
+<%@ page import="java.util.Collection" %>
+<%@ page import="java.util.Iterator" %>
 <%@ page import="getman.ejb3.jpa.relations.BookEntity" %>
 <%@ page import="getman.ejb3.jpa.relations.AuthorEntity" %>
 <%@ page import="getman.ejb3.jpa.relations.BookReviewEntity" %>
+<%@ page import="getman.ejb3.jpa.relations.BookSpoiler" %>
 <%@ page import="getman.ejb3.jpa.relations.ISBN" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -13,12 +17,66 @@
 books
 <% Object bookList = request.getAttribute("books");%>
 <% if (bookList != null) { %>
-    <table>
+    <table border="3">
+        <tr>
+            <td>id</td>
+            <td>title</td>
+            <td>author</td>
+            <td>type</td>
+            <td>spoiler</td>
+            <td>review</td>
+            <td>review author</td>
+        </tr>
         <% for (BookEntity nextBook : (List<BookEntity>) bookList) { %>
             <tr>
-                <td>id: <%= nextBook.getBookId() %></td>
-                <td>name: <%= nextBook.getBookName() %></td>
-                <td>type: <%= nextBook.getBookType() %></td>
+                <%--id--%>
+                <td><%= nextBook.getBookId() %></td>
+                <%--title--%>
+                <td><%= nextBook.getBookName() %></td>
+                <%--book author(s)--%>
+
+                <% Set<AuthorEntity> authorList = nextBook.getAuthorList();%>
+                <% String bookAuthors = "";%>
+                <% if (authorList != null) { %>
+                    <% Iterator<AuthorEntity> authorIter = authorList.iterator();%>
+                    <% while (authorIter.hasNext()) { %>
+                        <% AuthorEntity nextAuthor = authorIter.next();%>
+                        <%bookAuthors += nextAuthor.getAuthorName() + "/"; %>
+                    <% } %>
+                <% }%>
+                <td><%= bookAuthors %></td>
+
+                <%--type--%>
+                <td><%= nextBook.getBookType() %></td>
+                <% BookSpoiler spoiler = nextBook.getSpoiler();%>
+                <% if (spoiler != null) { %>
+                    <%--spoiler--%>
+                    <td><%= spoiler.getText() %></td>
+                <% } else { %>
+                    no spoiler
+                <% }%>
+                <% Collection<BookReviewEntity> reviewList = nextBook.getBookReviews();%>
+                <% Iterator<BookReviewEntity> iterator = null;%>
+                <% if (reviewList != null) { %>
+                <%     iterator = reviewList.iterator();%>
+                <% } %>
+                <% for (int i = 0; i < reviewList.size(); i++) { %>
+                    <% BookReviewEntity nextReview = iterator.next();%>
+                    <%--review--%>
+                    <td><%= nextReview.getReviewText() %></td>
+                    <%--review author--%>
+                    <td><%= nextReview.getAuthor().getAuthorName() %></td>
+                    <% if (iterator.hasNext()) { %>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                    <% } else if (reviewList.size() > 1) { %>
+                        </tr>
+                    <% } %>
+                <% } %>
             </tr>
         <% } %>
     </table>
@@ -29,8 +87,13 @@ books
     <p>
         <label for="item">Add book, name:</label>
         <input id="book" type="text" name="book"/>
+
         <label for="item">ISBN:</label>
         <input id="isbn" type="text" name="isbn"/>
+
+        <label for="item">spoiler:</label>
+        <input id="spoiler" type="text" name="spoiler"/>
+
         <input type="hidden" name="action" value="add"/>
         <input type="submit" value="add"/>
     </p>
@@ -97,7 +160,12 @@ book review
 <form method="POST" action="book_store">
     <p>
         <label for="item">Add review, book id:</label>
-        <input id="book_review" type="text" name="book_review"/>
+        <input id="book_id" type="text" name="book_id"/>
+        <label for="item">review text:</label>
+        <input id="review_text" type="text" name="review_text"/>
+        <label for="item">author id:</label>
+        <input id="author_id" type="text" name="author_id"/>
+
         <input type="hidden" name="action" value="add"/>
         <input type="submit" value="add"/>
     </p>
@@ -136,6 +204,42 @@ book ISBN
     </p>
 </form>
 <p></p>
+
+book spoiler
+<% Object spoilerList = request.getAttribute("bookSpoilers");%>
+<% if (spoilerList != null) { %>
+    <table>
+        <% for (BookSpoiler nextBookSpoiler : (List<BookSpoiler>) spoilerList) { %>
+            <tr>
+                <td>id: <%= nextBookSpoiler.getId() %></td>
+                <td>number: <%= nextBookSpoiler.getText() %></td>
+            </tr>
+        <% } %>
+    </table>
+<% } else { %>
+      no spoilers
+<% } %>
+<form method="POST" action="book_store">
+        <label for="item">Remove by spoiler id:</label>
+        <input id="bookSpoilerIdToRemove" type="text" name="bookSpoilerIdToRemove"/>
+        <input type="hidden" name="action" value="remove"/>
+        <input type="submit" value="remove"/>
+</form>
+<p></p>
+
+
+Запрос наличия книг в магазине
+<form method="POST" action="book_store">
+    <p>
+        <label for="item">Идентификатор книги(book id):</label>
+        <input id="book_id" type="text" name="book_id"/>
+        <label for="item">author id:</label>
+        <input id="author_id" type="text" name="author_id"/>
+
+        <input type="hidden" name="action" value="request"/>
+        <input type="submit" value="request"/>
+    </p>
+</form>
 
 </body>
 </html>

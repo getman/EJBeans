@@ -19,8 +19,9 @@ public class CalculatorBean3 implements CalculatorRemote3 {
     }
 
     public double add(double a, double b) {
-        logger.trace("calculator:" + ((double)a + b));
-        return (double) a + b;
+        logger.trace("calculatorrr:" + ((double)a + b));
+        throw new RuntimeException("fuckup");
+//        return (double) (a + b);
     }
 
     @PostConstruct
@@ -33,6 +34,7 @@ public class CalculatorBean3 implements CalculatorRemote3 {
         logger.trace("before destroy");
     }
 
+    @Remove
     public void remove() {
         logger.trace("remove is aquired");
     }

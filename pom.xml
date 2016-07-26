@@ -31,7 +31,6 @@
         <module>StateLessBean</module>
         <module>StateLessBean3.0</module>
         <module>EJBClients</module>
-        <module>MessageDrivenBean</module>
         <module>ejb-entity-cmp-passpoprt</module>
         <module>ejb3-entity-cmp-passport</module>
         <module>StateFullBean</module>
@@ -52,5 +51,9 @@
         <module>servlet-book-store</module>
         <module>ear3-jpa-book-store</module>
 
+        <!--MessageDrivenBeans-->
+        <module>ejb-mdb</module>
+        <module>ejb-session</module>
+        <module>ear-mdb-book-requst</module>
     </modules>
 </project>
